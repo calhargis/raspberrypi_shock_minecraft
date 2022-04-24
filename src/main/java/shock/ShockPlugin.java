@@ -10,21 +10,61 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * JavaPlugin class containing main plugin code
+ */
 public class ShockPlugin extends JavaPlugin implements Listener {
 
+    /**
+     * Static boolean variable to determine whether the player has enabled shock damage
+     */
     static Boolean toggleShock = false;
+
+    /**
+     * Static string containing the name of the first person to be shocked
+     */
     static String playerToShock = "";
+
+    /**
+     * Static string containing the name of the second person to be shocked
+     */
     static String playerToShock2 = "";
 
+    /**
+     * File path string of executable file 1
+     */
+    final String executableFile1 = "/home/pi/minecraft/shockExecutable1.sh";
 
+    /**
+     * File path string of executable file 2
+     */
+    final String executableFile2 = "/home/pi/minecraft/shockExecutable2.sh";
+
+    /**
+     * Path name of directory containing executable files
+     */
+    final String pathName = "/home/pi/minecraft";
+
+    /**
+     * Function to set first player to be shocked
+     * @param playerToShock username of the person to be shocked
+     */
     public void setPlayerToShock(String playerToShock) {
         ShockPlugin.playerToShock = playerToShock;
     }
 
+    /**
+     * Function to set first player to be shocked
+     * @param playerToShock2 username of the person to be shocked
+     */
     public void setPlayerToShock2(String playerToShock2) {
         ShockPlugin.playerToShock2 = playerToShock2;
     }
 
+    /**
+     * Inverts the boolean value of toggleShock
+     * @return the value of toggleShock after function is called and value is inverted
+     */
     public boolean setToggleShock() {
         if (toggleShock) {
             toggleShock = false;
@@ -34,8 +74,12 @@ public class ShockPlugin extends JavaPlugin implements Listener {
             toggleShock = true;
             return true;
         }
+
     }
 
+    /**
+     * Sets commands for executor
+     */
     @Override
     public void onEnable() {
         Objects.requireNonNull(this.getCommand("setshock")).setExecutor(new SetShock(this));
@@ -48,30 +92,41 @@ public class ShockPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(this, this);
     }
 
+    /**
+     * Empty onDisable function
+     */
     @Override
     public void onDisable(){
     }
 
+    /**
+     * Executes shock executable file for first person to shock
+     */
     public void shock1() {
         try {
-            Runtime.getRuntime().exec("/home/pi/minecraft/shockDallin.sh", null, new File("/home/pi/minecraft"));
+            Runtime.getRuntime().exec(executableFile1, null, new File(pathName));
         } catch (IOException e) {
-            System.out.println("failed");
+            System.out.println("failed to run executable file 1");
             e.printStackTrace();
         }
     }
 
+    /**
+     * Executes shock executable file for second person to shock
+     */
     public void shock2() {
         try {
-            Runtime.getRuntime().exec("/home/pi/minecraft/shockCal.sh", null, new File("/home/pi/minecraft"));
+            Runtime.getRuntime().exec(executableFile2, null, new File(pathName));
         } catch (IOException e) {
-            System.out.println("failed");
+            System.out.println("failed to run executable file 2");
             e.printStackTrace();
         }
     }
 
-
-
+    /**
+     * function to determine if damage was taken during an EntityDamageEvent
+     * @param e EntityDamageEvent to determine if damage was taken
+     */
     @EventHandler
     public void playerDamaged(EntityDamageEvent e) {
         if (!toggleShock) {
