@@ -1,0 +1,12 @@
+name: TemplatePlugin
+version: 1.0
+api-version: 1.13
+main: shock.ShockPlugin
+
+commands:
+  setshock:
+    description: Allows selection of person to be shocked.
+  setshock2:
+    description: Allows selection of a second person to be shocked.
+  toggleshock:
+    description: Toggles shock plugin
