@@ -33,17 +33,17 @@ public class ShockPlugin extends JavaPlugin implements Listener {
     /**
      * File path string of executable file 1
      */
-    final String executableFile1 = "/home/pi/minecraft/shockExecutable1.sh";
+    final String executableFile1 = "shockExecutable1.sh";
 
     /**
      * File path string of executable file 2
      */
-    final String executableFile2 = "/home/pi/minecraft/shockExecutable2.sh";
+    final String executableFile2 = "shockExecutable2.sh";
 
     /**
      * Path name of directory containing executable files
      */
-    final String pathName = "/home/pi/minecraft";
+    private String directory = "/home/pi/minecraft/";
 
     /**
      * Function to set first player to be shocked
@@ -59,6 +59,14 @@ public class ShockPlugin extends JavaPlugin implements Listener {
      */
     public void setPlayerToShock2(String playerToShock2) {
         ShockPlugin.playerToShock2 = playerToShock2;
+    }
+
+    /**
+     * Setter for directory variable
+     * @param directory Directory containing the executable files
+     */
+    public void setDirectory(String directory) {
+        this.directory = directory;
     }
 
     /**
@@ -78,16 +86,22 @@ public class ShockPlugin extends JavaPlugin implements Listener {
     }
 
     /**
-     * Sets commands for executor
+     * Set commands for executor
      */
     @Override
     public void onEnable() {
         Objects.requireNonNull(this.getCommand("setshock")).setExecutor(new SetShock(this));
         getLogger().info("Added the 'setshock' command.");
+
         Objects.requireNonNull(this.getCommand("setshock2")).setExecutor(new SetShock2(this));
         getLogger().info("Added the 'setshock2' command.");
+
         Objects.requireNonNull(this.getCommand("toggleshock")).setExecutor(new ToggleShock(this));
         getLogger().info("Added the 'toggleshock' command.");
+
+        Objects.requireNonNull(this.getCommand("setdirectory")).setExecutor(new SetDirectory(this));
+        getLogger().info("Added the 'setdirectory' command.");
+
         System.out.println("Plugin Running");
         getServer().getPluginManager().registerEvents(this, this);
     }
@@ -104,9 +118,9 @@ public class ShockPlugin extends JavaPlugin implements Listener {
      */
     public void shock1() {
         try {
-            Runtime.getRuntime().exec(executableFile1, null, new File(pathName));
+            Runtime.getRuntime().exec(directory + executableFile1, null, new File(directory));
         } catch (IOException e) {
-            System.out.println("failed to run executable file 1");
+            System.out.println("Failed to run executable file 1");
             e.printStackTrace();
         }
     }
@@ -116,9 +130,9 @@ public class ShockPlugin extends JavaPlugin implements Listener {
      */
     public void shock2() {
         try {
-            Runtime.getRuntime().exec(executableFile2, null, new File(pathName));
+            Runtime.getRuntime().exec(directory + executableFile2, null, new File(directory));
         } catch (IOException e) {
-            System.out.println("failed to run executable file 2");
+            System.out.println("Failed to run executable file 2");
             e.printStackTrace();
         }
     }

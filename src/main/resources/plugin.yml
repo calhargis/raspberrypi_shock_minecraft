@@ -1,5 +1,5 @@
 name: TemplatePlugin
-version: 1.0
+version: Alpha 1.0
 api-version: 1.13
 main: shock.ShockPlugin
 
@@ -10,3 +10,5 @@ commands:
     description: Allows selection of a second person to be shocked.
   toggleshock:
     description: Toggles shock plugin
+  setdirectory:
+    description: Allows specification of directory for shock executables
