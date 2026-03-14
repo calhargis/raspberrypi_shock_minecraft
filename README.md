@@ -7,7 +7,9 @@ DISCLAIMER:
 Do not use this plugin. It will physically hurt you
 
 INSTRUCTIONS BEFORE USING:
-In order for the executable files to work correctly, both shockExecutable files need to be in the same directory and the path to the shockExecutable needs to be specified. By default, the plugin will assume the executable is in the directory /home/pi/minecraft/. If this needs to be changed, the /setpath command should be used to specify the correct directory.
+In order for the executable files to work correctly, both `shockExecutable` files need to be in the same directory and the path to that directory needs to be specified. By default, the plugin will assume the executables are in `/home/pi/minecraft/`. If this needs to be changed, the `/setdirectory` command should be used to specify the correct directory.
+
+This repository includes `shockExecutable1.sh` and `shockExecutable2.sh` as safe stand-in executables for the plugin interface. Each invocation appends a line to `shock-executions.log` in the same directory instead of controlling GPIO hardware.
 
 Commands:
 ```
